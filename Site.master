@@ -1,0 +1,111 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        nav.navbar.navbar-inverse
+        {
+            background: #009831 !important;
+        }
+        .navbar-inverse .navbar-nav > li > a
+        {
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-nav > .active > a
+        {
+            background: #fff !important;
+            color: #009831 !important;
+            text-shadow: none;
+            box-shadow: none;
+        }
+        .navbar-brand
+        {
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        $(function () {
+
+            var pages = {
+                'shiters.aspx': 1,
+                'shitteroperations.aspx': 2,
+                'shiterdayoperations.aspx': 3,
+                'submitoperations.aspx': 4,
+                'simulationshistory.aspx': 5,
+                'shitterpricemaintenance.aspx': 6
+            };
+
+            var pagename = document.location.pathname.match(/[^\/]+$/)[0];
+            $('li.page').removeClass('active');
+            $('li#page' + pages[pagename.toLowerCase()]).addClass('active');
+        })
+    </script>
+    <form runat="server">
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Shiters</a>
+    </div>
+    <ul class="nav navbar-nav">
+      
+      <% if (Session["email"] == null)
+         { %>
+      <li><a href="Login.aspx">Login</a></li>
+      <% } %>
+      <% if (Session["email"] != null)
+         { %>
+      <li id="page1" class="page"><a href="Shiters.aspx">Shiters</a></li>
+      <li id="page2" class="page"><a href="ShitterOperations.aspx">Shiter Operations</a></li>
+      <li id="page3" class="page"><a href="ShiterDayOperations.aspx">Operation By Day</a></li>
+      <li id="page4" class="page"><a href="SubmitOperations.aspx">Operations Submit</a></li>
+      <li id="page5" class="page"><a href="SimulationsHistory.aspx">Simulations History</a></li>
+      <li id="page6" class="page"><a href="ShitterPriceMaintenance.aspx">Shitters Prices Maintenance</a></li>
+      <li><a href="Logout.aspx">Logout</a></li>
+        <li style="background: #fff !important;">
+            <div style="position: absolute; left: 50%;">
+            <i class="fa fa-user-circle" style="position: relative; left: -50%;color:green !important;" aria-hidden="true"></i> 
+            </div>
+            
+            <a style="color:green !important;">Hello <%=Session["name"].ToString() %></a>
+        </li>
+      <% } %>
+    </ul>
+
+  </div>
+</nav>
+    <div class="container" style="height: calc(100% - 50px)">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+    </form>
+    
+        <img style="position: fixed;
+right: 0;
+bottom: 0;
+width: 80px;" src="https://upload.wikimedia.org/wikipedia/he/thumb/8/80/PaperHadera.svg/200px-PaperHadera.svg.png"
+            alt="Alternate Text" />
+    
+</body>
+</html>
